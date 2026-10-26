@@ -1,4 +1,4 @@
 {
     "makefile.configureOnOpen": false,
-    "git.addAICoAuthor": false
+    "git.addAICoAuthor": "off"
 }

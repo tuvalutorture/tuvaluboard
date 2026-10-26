@@ -57,3 +57,6 @@ A HUGE shoutout goes to [Nightwind](https://github.com/Nightwind), a fellow twea
 This project is licensed under [MIT](LICENSE).
 
 ###### Copyright (c) 2026 tuvalutorture, wit massive thanks to Nightwind.
+
+###### P.S.
+FUCK YOU, COPILOT; THOU HATH NO RIGHT TO CLAIM AUTHORSHIP OVER THINE COMMITS; FOR THOU ART NOT A CONTRIBUTOR TO MY WORK YOU LAZY FUCKING SWINE
