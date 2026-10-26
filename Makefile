@@ -1,10 +1,12 @@
+# this makefile was made ENTIRELY by Nightwind, I only modified it.
+
 PREFIX := /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
 CC := $(PREFIX)/clang
 LD := $(HOME)/ld/linker/ld64-objc1
 SDK := $(THEOS)/sdks/iPhoneOS1.1.5.sdk
 
 SRC := Tweak.m $(wildcard Firmware/*.m)
-OUT := FullIconList.dylib
+OUT := TuvaluBoard.dylib
 
 PXL_WORKINGDIR := _temp
 PXL_INSTROOT := $(PXL_WORKINGDIR)/instroot
@@ -28,13 +30,13 @@ $(PXL_INSTROOT):
 pxl: all $(PXL_INSTROOT)
 	@echo "[+] Creating PXL package"
 
-	cp $(OUT) $(PXL_INSTROOT)/Library/MicroInjector/DynamicLibraries/FullIconList.dylib
-	cp FullIconList.plist $(PXL_INSTROOT)/Library/MicroInjector/DynamicLibraries/FullIconList.plist
+	cp $(OUT) $(PXL_INSTROOT)/Library/MicroInjector/DynamicLibraries/TuvaluBoard.dylib
+	cp TuvaluBoard.plist $(PXL_INSTROOT)/Library/MicroInjector/DynamicLibraries/TuvaluBoard.plist
 	cp PxlPkg.plist $(PXL_WORKINGDIR)/PxlPkg.plist
-	cd $(PXL_WORKINGDIR) && zip -r ../FullIconList.pxl .
+	cd $(PXL_WORKINGDIR) && zip -r ../TuvaluBoard.pxl .
 	rm -rf $(PXL_WORKINGDIR)
 
 	@echo "[+] Done!"
 
 clean:
-	rm -f $(OUT) FullIconList.pxl
+	rm -f $(OUT) TuvaluBoard.pxl
