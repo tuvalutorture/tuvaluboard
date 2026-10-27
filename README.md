@@ -50,7 +50,7 @@ Once compiled, use [PXLInstaller](https://github.com/theiphoneos1project/PXLInst
 
 
 #### Credits
-This tweak was written almost entirely by myself, tuvalutorture, with minimal assistance from LLMs beyond conceptual things. <br>
+This tweak was written almost entirely by myself, tuvalutorture, with minimal assistance from LLMs beyond conceptual things (and for the makefile :P). <br>
 A HUGE shoutout goes to [Nightwind](https://github.com/Nightwind), a fellow tweak creator and someone who has been INSTRUMENTAL to this project, both in helping me get started, building the tooling around this, and additionally, being the foundation of this project (this repo is based on the [FullIconList](https://github.com/theiphoneos1project/fulliconlist-iphoneos1) tweak by him, includes code from it, as well as is under the same license). Additionally, it cannot be overstated how instrumental his work on [The iPhone OS 1 project](https://github.com/theiphoneos1project) has been as well, with almost all tooling used here taking advantage of the repos found within.
 
 #### License

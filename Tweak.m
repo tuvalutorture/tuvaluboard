@@ -26,6 +26,22 @@ static void updateBGImage(__unused CFNotificationCenterRef center, __unused void
     }
 }
 
+@interface Scapegoat : UIImageView 
+@end
+
+@implementation Scapegoat
+- (void)setAlpha:(CGFloat)alpha {
+    return;
+}
+@end
+
+static void (*SBSlidingAlertDisplay_dismiss_orig)(id, SEL) = NULL;
+static void SBSlidingAlertDisplay_dismiss(SBAwayView *self, SEL _cmd) {
+    object_setClass(self->_backgroundView, [Scapegoat class]);
+    SBSlidingAlertDisplay_dismiss_orig(self, _cmd);
+    object_setClass(self->_backgroundView, [UIImageView class]);
+}
+
 static id (*SBIconController_contentView_orig)(id, SEL) = NULL;
 static id SBIconController_contentView(SBIconController *self, SEL _cmd) {
     id orig = SBIconController_contentView_orig(self, _cmd);
@@ -78,5 +94,6 @@ __attribute__((constructor)) static void init(void) {
     /* end of nightwind code, begin my code :3 */
     MSHookMessageEx(NSClassFromString(@"SBIconList"), sel_getUid("layoutIconsIfNeeded"), (IMP)SBIconList_layoutIconsIfNeeded, NULL);
     MSHookMessageEx(NSClassFromString(@"SBIconController"), sel_getUid("contentView"), (IMP)SBIconController_contentView, (IMP *)&SBIconController_contentView_orig);
+    MSHookMessageEx(NSClassFromString(@"SBSlidingAlertDisplay"), sel_getUid("dismiss"), (IMP)SBSlidingAlertDisplay_dismiss, (IMP *)&SBSlidingAlertDisplay_dismiss_orig);
 }
 // imageWithData:[NSData dataWithContentsOfFile:@"/var/root/Library/LockBackground.jpg"]
