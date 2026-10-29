@@ -42,6 +42,43 @@ static void SBSlidingAlertDisplay_dismiss(SBAwayView *self, SEL _cmd) {
     object_setClass(self->_backgroundView, [UIImageView class]);
 }
 
+// TESTING WEIRD SHIT HERE
+
+// void __cdecl -[SBDisplay setActivationSetting:flag:](SBDisplay *self, SEL a2, int a3, char a4)
+static void (*SBDisplay_setActivationSetting_flag_orig)(id, SEL, int, char) = NULL;
+static void SBDisplay_setActivationSetting_flag(SBDisplay *self, SEL _cmd, int a3, char a4) {
+    SBDisplay_setActivationSetting_flag_orig(self, _cmd, a3, a4);           
+}
+
+// void __cdecl -[SBDisplay setDeactivationSetting:flag:](SBDisplay *self, SEL a2, int a3, char a4)
+static void (*SBDisplay_setDeactivationSetting_flag_orig)(id, SEL, int, char) = NULL;
+static void SBDisplay_setDeactivationSetting_flag(SBDisplay *self, SEL _cmd, int a3, char a4) {
+    SBDisplay_setDeactivationSetting_flag_orig(self, _cmd, a3, a4);
+    if (a3 == 2 && !a4) {
+        //[[[NSClassFromString(@"SBStatusBarController") sharedStatusBarController] statusBarView] setAlpha:0.6f];        
+    }
+}
+
+// void __cdecl -[SBUIController restoreIconList:force:](SBUIController *self, SEL a2, char a3, char a4)
+static void (*SBUIController_restoreIconList_force_orig)(id, SEL, char, char) = NULL;
+static void SBUIController_restoreIconList_force(SBUIController *self, SEL _cmd, char a3, char a4) {
+    SBUIController_restoreIconList_force_orig(self, _cmd, a3, a4);
+    //[[NSClassFromString(@"SBStatusBarController") sharedStatusBarController] setStatusBarMode:1 orientation:0 duration:0 fenceID:0 animation:0];
+    //[[NSClassFromString(@"SBApplication") springBoard] updateStatusBar:2.0f];
+}
+
+// void __cdecl -[SBUIController setState:](SBUIController *self, SEL a2, int a3)
+static void (*SBUIController_setState_orig)(id, SEL, int) = NULL;
+static void SBUIController_setState(SBUIController *self, SEL _cmd, int a3) {
+    SBUIController_setState_orig(self, _cmd, a3);
+    if (a3 == 0) {
+        //[[NSClassFromString(@"SBStatusBarController") sharedStatusBarController] setStatusBarMode:1 orientation:0 duration:0 fenceID:0 animation:0];
+        //[[NSClassFromString(@"SBApplication") springBoard] updateStatusBar:2.0f];
+    }
+}
+
+// ok weird tests over
+
 static id (*SBIconController_contentView_orig)(id, SEL) = NULL;
 static id SBIconController_contentView(SBIconController *self, SEL _cmd) {
     id orig = SBIconController_contentView_orig(self, _cmd);
@@ -95,5 +132,8 @@ __attribute__((constructor)) static void init(void) {
     MSHookMessageEx(NSClassFromString(@"SBIconList"), sel_getUid("layoutIconsIfNeeded"), (IMP)SBIconList_layoutIconsIfNeeded, NULL);
     MSHookMessageEx(NSClassFromString(@"SBIconController"), sel_getUid("contentView"), (IMP)SBIconController_contentView, (IMP *)&SBIconController_contentView_orig);
     MSHookMessageEx(NSClassFromString(@"SBSlidingAlertDisplay"), sel_getUid("dismiss"), (IMP)SBSlidingAlertDisplay_dismiss, (IMP *)&SBSlidingAlertDisplay_dismiss_orig);
+    MSHookMessageEx(NSClassFromString(@"SBDisplay"), sel_getUid("setDeactivationSetting:flag:"), (IMP)SBDisplay_setDeactivationSetting_flag, (IMP *)&SBDisplay_setDeactivationSetting_flag_orig);
+    MSHookMessageEx(NSClassFromString(@"SBUIController"), sel_getUid("restoreIconList:force:"), (IMP)SBUIController_restoreIconList_force, (IMP *)&SBUIController_restoreIconList_force_orig);
+    MSHookMessageEx(NSClassFromString(@"SBUIController"), sel_getUid("setState:"), (IMP)SBUIController_setState, (IMP *)&SBUIController_setState_orig);
+    MSHookMessageEx(NSClassFromString(@"SBDisplay"), sel_getUid("setActivationSetting:flag:"), (IMP)SBDisplay_setActivationSetting_flag, (IMP *)&SBDisplay_setActivationSetting_flag_orig);
 }
-// imageWithData:[NSData dataWithContentsOfFile:@"/var/root/Library/LockBackground.jpg"]

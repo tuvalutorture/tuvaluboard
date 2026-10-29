@@ -28,6 +28,28 @@
 			<key>source</key>
 			<string>instroot/Library/MicroInjector/DynamicLibraries/TuvaluBoard.plist</string>
 		</dict>
+		<dict>
+			<key>destination</key>
+			<string>/Library/MicroInjector/DynamicLibraries/TuvaluWallpaper.dylib</string>
+			<key>overwrite</key>
+			<false/>
+			<key>permanent</key>
+			<false/>
+			<key>executable</key>
+			<true/>
+			<key>source</key>
+			<string>instroot/Library/MicroInjector/DynamicLibraries/TuvaluWallpaper.dylib</string>
+		</dict>
+		<dict>
+			<key>destination</key>
+			<string>/Library/MicroInjector/DynamicLibraries/TuvaluWallpaper.plist</string>
+			<key>overwrite</key>
+			<false/>
+			<key>permanent</key>
+			<false/>
+			<key>source</key>
+			<string>instroot/Library/MicroInjector/DynamicLibraries/TuvaluWallpaper.plist</string>
+		</dict>
 	</array>
 	<key>RDPxlPackageName</key>
 	<string>TuvaluBoard</string>

@@ -4,6 +4,7 @@ PREFIX := /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xct
 CC := $(PREFIX)/clang
 LD := $(HOME)/ld/linker/ld64-objc1
 SDK := $(THEOS)/sdks/iPhoneOS1.1.5.sdk
+PXLINST := $(HOME)/pxl-installer/pxlinstaller
 
 SRC := Tweak.m $(wildcard Firmware/*.m)
 OUT := TuvaluBoard.dylib
@@ -43,6 +44,9 @@ pxl: all $(PXL_DYLIB_DIR)
 	cp PxlPkg.plist $(PXL_WORKINGDIR)/PxlPkg.plist
 	cd $(PXL_WORKINGDIR) && zip -r ../TuvaluBoard.pxl .
 	rm -rf $(PXL_WORKINGDIR)
+
+install: pxl
+	$(PXLINST) --install-application TuvaluBoard.pxl
 
 clean:
 	rm -f $(OUT) $(WALLPAPER_OUT) TuvaluBoard.pxl

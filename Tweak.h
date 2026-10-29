@@ -1,3 +1,403 @@
+@class NSMutableDictionary, NSMutableSet;
+
+@interface SBDisplay : NSObject
+{
+    NSMutableDictionary *_activationValues;
+    NSMutableDictionary *_deactivationValues;
+    int _activationSettings;
+    int _deactivationSettings;
+    NSMutableSet *_suppressVolumeHudCategories;
+    float _autoDimOverride;
+    float _autoLockOverride;
+    unsigned int _expectsFaceContact:1;
+    unsigned int _disallowTouchPoints:1;
+    unsigned int _accelerometerDeviceOrientationChangedEventsEnabled:1;
+    unsigned int _accelerometerRawEventsEnabled:1;
+    unsigned int _proximityEventsEnabled:1;
+    unsigned int _showsProgress:1;
+}
+
++ (void)loadDisplayStates;
++ (void)saveDisplayStates;
++ (void)setDefaultValue:(id)arg1 forKey:(const id)arg2 displayIdentifier:(id)arg3;
++ (id)defaultValueForKey:(const id)arg1 displayIdentifier:(id)arg2;
++ (void)resetDefaultValuesForDisplayIdentifier:(id)arg1;
+- (void)dealloc;
+- (id)copyWithZone:(struct _NSZone *)arg1;
+- (id)displayIdentifier;
+- (void)clearActivationSettings;
+- (void)setActivationSetting:(int)arg1 flag:(BOOL)arg2;
+- (void)setActivationSetting:(int)arg1 value:(id)arg2;
+- (id)activationValue:(int)arg1;
+- (BOOL)activationSetting:(int)arg1;
+- (void)clearDeactivationSettings;
+- (void)setDeactivationSetting:(int)arg1 flag:(BOOL)arg2;
+- (BOOL)deactivationSetting:(int)arg1;
+- (void)setDeactivationSetting:(int)arg1 value:(id)arg2;
+- (id)deactivationValue:(int)arg1;
+- (BOOL)activate;
+- (BOOL)deactivate;
+- (void)deactivated;
+- (BOOL)kill;
+- (void)exitedAbnormally;
+- (void)exitedNormally;
+- (BOOL)allowsInCallStatusBar;
+- (void)updateStatusBar:(float)arg1 fence:(int)arg2 animation:(int)arg3;
+- (void)updateStatusBar:(float)arg1;
+- (int)statusBarMode;
+- (int)statusBarOrientation;
+- (float)autoDimTime;
+- (void)setAutoDimTime:(float)arg1;
+- (float)autoLockTime;
+- (void)setAutoLockTime:(float)arg1;
+- (void)setExpectsFaceContact:(BOOL)arg1;
+- (BOOL)expectsFaceContact;
+- (void)setAccelerometerDeviceOrientationChangedEventsEnabled:(BOOL)arg1;
+- (BOOL)accelerometerDeviceOrientationChangedEventsEnabled;
+- (void)setAccelerometerRawEventsEnabled:(BOOL)arg1;
+- (BOOL)accelerometerRawEventsEnabled;
+- (void)setProximityEventsEnabled:(BOOL)arg1;
+- (BOOL)proximityEventsEnabled;
+- (void)setShowsProgress:(BOOL)arg1;
+- (BOOL)showsProgress;
+- (void)setSystemVolumeHUDEnabled:(BOOL)arg1 forCategory:(id)arg2;
+- (BOOL)showSystemVolumeHUDForCategory:(id)arg1;
+- (void)setTouchPointsAllowed:(BOOL)arg1;
+- (BOOL)touchPointsAllowed;
+- (id)description;
+- (id)activationSettingsDescription;
+- (id)deactivationSettingsDescription;
+
+@end
+
+@class NSMutableArray, NSMutableSet, NSString, UIRemoteApplication;
+
+@interface SBApplication : SBDisplay
+{
+    NSString *_roleID;
+    NSString *_path;
+    NSString *_bundleID;
+    BOOL _isLaunching;
+    int _failedLaunchCount;
+    int _memoryWarningCount;
+    BOOL _enabled;
+    BOOL _useDemoRole;
+    unsigned int _dataUsage:3;
+    unsigned int _relauchesOnAbnormalExit:1;
+    unsigned int _isDefaultRole:1;
+    NSString *_demoRole;
+    NSMutableSet *_statusBarItemSet;
+    NSMutableArray *_tags;
+    UIRemoteApplication *_remoteApplication;
+    struct __CFSet *_launchAlerts;
+    int _pid;
+    NSString *_displayName;
+}
+
++ (id)applicationsByRoleWithPath:(id)arg1;
++ (id)applicationWithPath:(id)arg1;
++ (id)applicationWithPath:(id)arg1 roleID:(id)arg2;
++ (id)applicationWithPath:(id)arg1 roleID:(id)arg2 plist:(id)arg3;
++ (id)applicationWithDisplayIdentifier:(id)arg1;
++ (id)springBoard;
++ (id)iPod;
++ (void)setUseDemoRole:(BOOL)arg1;
++ (void)flushSnapshotsForIdentifier:(id)arg1;
++ (void)flushLaunchAlertsOfType:(int)arg1;
+- (id)init;
+- (id)description;
+- (void)_startLaunchWatchdogTimer;
+- (void)_startResumeWatchdogTimer;
+- (void)_startDeactivationWatchdogTimer;
+- (void)_cancelWatchdogTimer;
+- (void)dealloc;
+- (void)setRoleID:(id)arg1;
+- (id)roleID;
+- (void)setIsDefaultRole:(BOOL)arg1;
+- (BOOL)isDefaultRole;
+- (BOOL)enabled;
+- (void)setEnabled:(BOOL)arg1;
+- (id)demoRole;
+- (void)setDemoRole:(id)arg1;
+- (void)setUseDemoRole:(BOOL)arg1;
+- (id)path;
+- (id)bundleID;
+- (id)bundle;
+- (id)bundleForLaunching;
+- (id)arguments;
+- (void)setTags:(id)arg1;
+- (id)tags;
+- (unsigned int)dataUsage;
+- (BOOL)isWidget;
+- (id)_additionalDisplayQualification;
+- (id)displayIdentifier;
+- (id)pathForIcon;
+- (BOOL)shouldLaunchPNGless;
+- (id)pathForDefaultImage:(char *)arg1;
+- (id)displayName;
+- (void)setDisplayName:(id)arg1;
+- (id)launchURLArgument;
+- (void)_sendCurrentDeviceOrientation;
+- (BOOL)activate;
+- (BOOL)deactivate;
+- (void)watchdogForDeactivate;
+- (void)watchdogForResume;
+- (void)watchdogForLaunch;
+- (void)deactivated;
+- (BOOL)kill;
+- (void)_autoLaunchMailIfNeeded;
+- (void)_relaunchAfterAbnormalExit;
+- (void)exitedAbnormally;
+- (void)exitedNormally;
+- (unsigned int)priority;
+- (int)failedLaunchCount;
+- (void)removeAppPrefs;
+- (void)launchFailed;
+- (void)launchSucceeded;
+- (int)PID;
+- (void)setPID:(int)arg1;
+- (int)memoryWarningCount;
+- (void)setMemoryWarningCount:(id)arg1;
+- (void)setRelaunchesAfterAbnormalExit:(BOOL)arg1;
+- (BOOL)relaunchesAfterAbnormalExit;
+- (void)noteAddedStatusBarItem:(id)arg1;
+- (void)noteRemovedStatusBarItem:(id)arg1;
+- (id)remoteApplication;
+- (BOOL)showLaunchAlertForType:(int)arg1;
+- (void)resetLaunchAlertForType:(int)arg1;
+- (BOOL)isRunning;
+
+@end
+
+
+
+@class NSMutableDictionary, SBAlertDisplay, SBAlertWindow;
+
+@interface SBAlert : SBDisplay
+{
+    SBAlertDisplay *_display;
+    NSMutableDictionary *_dictionary;
+    SBAlertWindow *_deferredAlertWindow;
+}
+
++ (void)registerForAlerts;
++ (id)alertWindow;
++ (void)test;
+- (void)dealloc;
+- (id)display;
+- (void)setDisplay:(id)arg1;
+- (id)alertDisplayViewWithSize:(struct CGSize)arg1;
+- (void)setObject:(id)arg1 forKey:(id)arg2;
+- (id)objectForKey:(id)arg1;
+- (BOOL)allowsStackingOfAlert:(id)arg1;
+- (BOOL)displaysAboveLock;
+- (BOOL)undimsDisplay;
+- (float)finalAlpha;
+- (double)animateInDuration;
+- (struct CGRect)alertWindowRect;
+- (BOOL)activate;
+- (void)tearDownAlertWindow:(id)arg1;
+- (void)removeFromView;
+- (BOOL)deactivate;
+- (BOOL)animatesDismissal;
+- (BOOL)allowsInCallStatusBar;
+- (float)autoDimTime;
+- (int)statusBarMode;
+- (int)statusBarOrientation;
+- (void)didAnimateLockKeypadIn;
+- (void)didAnimateLockKeypadOut;
+- (void)didFinishAnimatingIn;
+- (void)didFinishAnimatingOut;
+
+@end
+
+
+@class NSDate, NSDictionary, NSMutableArray, NSTimeZone, NSTimer, SBAlertItem, SBAwayItem, SBAwayModel, SBAwayView, SBSlidingAlertDisplay, SBUIController;
+
+@interface SBAwayController : SBAlert
+{
+    SBUIController *_uiController;
+    SBAwayModel *_model;
+    SBAwayView *_awayView;
+    NSTimer *_dimTimer;
+    NSDate *_lockDate;
+    SBAwayItem *_clickedItem;
+    unsigned int _isLocked:1;
+    unsigned int _isDimmed:1;
+    unsigned int _isDimming:1;
+    unsigned int _orderedOutDimmed:1;
+    unsigned int _frontDimmed:1;
+    unsigned int _isBlocked:1;
+    unsigned int _makingEmergencyCall:1;
+    unsigned int _appRequestedPasscodeEntry:1;
+    unsigned int _needToMakeEmergencyCall:1;
+    unsigned int _isSyncing:1;
+    unsigned int _relockAfterUnlock:1;
+    unsigned int _wasLockedBeforeSync:1;
+    unsigned int _wasDeviceLockedBeforeSync:1;
+    NSDictionary *_nowPlayingInfo;
+    double _sleepDelay;
+    SBSlidingAlertDisplay *_deviceUnlockDisplay;
+    double _deviceLockBlockTime;
+    double _deviceLockGracePeriodEndTimeInterval;
+    NSTimeZone *_deviceLockGraceTimeZone;
+    NSMutableArray *_pendingAlertItems;
+    SBAlertItem *_currentAlertItem;
+    int _notifyLockStateToken;
+}
+
++ (id)sharedAwayController;
++ (void)registerForAlerts;
+- (id)initWithUIController:(id)arg1;
+- (id)awayModel;
+- (void)applicationDidFinishLaunching:(id)arg1;
+- (struct CGRect)alertWindowRect;
+- (float)finalAlpha;
+- (BOOL)undimsDisplay;
+- (id)awayView;
+- (id)alertDisplayViewWithSize:(struct CGSize)arg1;
+- (void)alertDisplayWillBecomeVisible;
+- (void)dealloc;
+- (void)handleClickedItem:(id)arg1;
+- (double)animateInDuration;
+- (void)reactivatePendingAlertItems;
+- (void)playLockSound;
+- (void)_sendLockStateChangedNotification;
+- (void)lock;
+- (void)_unlockWithSound:(BOOL)arg1;
+- (void)unlockWithSound:(BOOL)arg1;
+- (void)unlockWithSound:(BOOL)arg1 alertDisplay:(id)arg2;
+- (void)_resetGracePeriod;
+- (void)_timeChanged;
+- (void)_setupDeviceLockGracePeriod;
+- (BOOL)isPasswordProtected;
+- (void)activationChanged:(id)arg1;
+- (BOOL)isDeviceLocked;
+- (void)setDeviceLocked:(BOOL)arg1;
+- (void)applicationRequestedDeviceUnlock;
+- (void)cancelApplicationRequestedDeviceLockEntry;
+- (void)_clearBlockedState;
+- (BOOL)isBlocked;
+- (BOOL)isPermanentlyBlocked:(double *)arg1;
+- (void)noteSyncStateChanged;
+- (BOOL)isSyncing;
+- (void)noteResetRestoreStateChanged;
+- (BOOL)isLocked;
+- (void)lockBarStartedTracking:(id)arg1;
+- (void)lockBarStoppedTracking:(id)arg1;
+- (void)resetAwayItems;
+- (void)frontLockedAnimationFinished;
+- (void)_frontForSuspendedLockAfterDelay;
+- (void)frontForSuspendedLockAfterDelay:(float)arg1;
+- (BOOL)shouldAnimateOthersSuspension;
+- (void)frontLocked:(BOOL)arg1 animate:(BOOL)arg2 automatically:(BOOL)arg3;
+- (void)attemptUnlock;
+- (BOOL)isAttemptingUnlock;
+- (void)_finishedUnlockAttemptWithStatus:(BOOL)arg1;
+- (BOOL)attemptDeviceUnlockWithPassword:(id)arg1 alertDisplay:(id)arg2;
+- (void)sleep;
+- (void)preventIdleSleep;
+- (void)wake;
+- (void)cancelDimTimer;
+- (void)restartDimTimer:(float)arg1;
+- (BOOL)isDimmed;
+- (BOOL)moveAlertItemToAwayView:(id)arg1;
+- (void)clensePendingQueueOfAwayItems;
+- (void)relock;
+- (void)relockDimmed:(BOOL)arg1;
+- (double)sleepDelay;
+- (void)delaySleepByNumberOfSeconds:(float)arg1;
+- (void)dimScreen:(BOOL)arg1;
+- (void)_undimScreen;
+- (void)undimScreen;
+- (void)activate;
+- (BOOL)deactivate;
+- (BOOL)allowsStackingOfAlert:(id)arg1;
+- (BOOL)allowsInCallStatusBar;
+- (int)statusBarMode;
+- (BOOL)animatesDismissal;
+- (void)orderOut;
+- (void)didFinishAnimatingOut;
+- (void)animator:(id)arg1 stopAnimation:(id)arg2;
+- (void)clickItem:(id)arg1;
+- (void)updateNowPlayingInfo:(id)arg1;
+- (void)handleRequestedAlbumArtBytes:(char *)arg1 length:(unsigned int)arg2;
+- (void)updateClockFormat;
+- (void)makeEmergencyCall;
+- (void)_activateEmergencyCall;
+- (void)emergencyCallWasDisplayed;
+- (void)emergencyCallWasRemoved;
+- (BOOL)isMakingEmergencyCall;
+- (void)didAnimateLockKeypadIn;
+- (void)didAnimateLockKeypadOut;
+- (id)currentAlertItem;
+- (void)pendOrDeactivateCurrentAlertItem;
+- (BOOL)isCurrentAlertItemRinging;
+- (BOOL)attemptSnoozeRingingAlertItem;
+- (void)stopRingingAlertItem;
+- (void)snoozeOrStopRingingAlertItem;
+- (BOOL)trySnoozingAlarmAlertItem;
+- (BOOL)activateAlertItem:(id)arg1;
+- (BOOL)wantsToHandleAlert:(id)arg1;
+- (void)deactivateAlertItem:(id)arg1;
+- (void)updateInCallUI;
+- (BOOL)isShowingMediaControls;
+- (void)hideMediaControls;
+- (BOOL)_disableShowingMediaControls;
+- (BOOL)toggleMediaControls;
+- (void)toggleShowsIMEIandICCID:(id)arg1;
+
+@end
+
+@class SBStatusBarAirPortView, SBStatusBarBatteryView, SBStatusBarBluetoothBatteryView, SBStatusBarBluetoothView, SBStatusBarCarrierView, SBStatusBarController, SBStatusBarIndicatorsView, SBStatusBarNoServiceView, SBStatusBarProgressView, SBStatusBarSignalView, SBStatusBarTimeView;
+
+@interface SBStatusBarContentsView : UIView
+{
+    SBStatusBarController *_controller;
+    int _mode;
+    BOOL _dimmed;
+    UIView *_lockIconView;
+    SBStatusBarTimeView *_timeView;
+    SBStatusBarBatteryView *_batteryView;
+    SBStatusBarSignalView *_signalView;
+    SBStatusBarCarrierView *_carrierView;
+    SBStatusBarIndicatorsView *_indicatorsView;
+    SBStatusBarAirPortView *_airPortView;
+    SBStatusBarNoServiceView *_noServiceView;
+    SBStatusBarBluetoothView *_bluetoothView;
+    SBStatusBarProgressView *_progressView;
+    SBStatusBarBluetoothBatteryView *_bluetoothBatteryView;
+}
+
++ (float)contentAlphaForMode:(int)arg1;
+- (id)initWithStatusBarController:(id)arg1 mode:(int)arg2;
+- (void)dealloc;
+- (void)buildContentViews;
+- (void)updateContentViewsAlpha;
+- (void)reflowContentViewsNow;
+- (void)reflowContentViews;
+- (void)stop;
+- (void)start;
+- (void)bluetoothBatteryAvailabilityChanged;
+- (void)stopClock;
+- (void)startClock;
+- (void)updateClockFormat;
+- (void)setShowsService:(BOOL)arg1 SIMStatus:(id)arg2;
+- (void)significantTimeChange;
+- (void)signalFormatChanged;
+- (void)customTextChanged;
+- (void)progressChanged;
+- (void)cloakChanged;
+- (void)setAirPortStrength:(int)arg1;
+- (void)setShowsAirPort:(BOOL)arg1 animate:(BOOL)arg2;
+- (void)indicatorsChanged;
+- (void)setIsInAirplaneMode:(BOOL)arg1 animate:(BOOL)arg2;
+- (void)loopCarrierNameIfNecessary;
+
+@end
+
+
+
 @class NSMutableArray, NSString, SBStatusBar, SBStatusBarContentsView, UIWindow;
 
 @interface SBStatusBarController : NSObject
